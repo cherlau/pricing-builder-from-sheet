@@ -6,7 +6,7 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2020-f7df1e?style=flat-square&logo=javascript)
 ![Webpack](https://img.shields.io/badge/Webpack-Vue_CLI-8dd6f9?style=flat-square&logo=webpack)
 
-> Demo: https://cherlau-gerador-de-proposta.netlify.app/
+> Demo: https://pricing-builder-from-sheet.netlify.app
 
 ---
 
