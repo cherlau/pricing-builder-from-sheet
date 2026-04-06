@@ -14,8 +14,11 @@
               :resources="module"
             ></resource-list>
           </data>
-          <input-range :tipo="'CRM'"></input-range>
-          <input-range :tipo="'Usuários'"></input-range>
+          <input-range
+            v-for="tipo in inputRanges"
+            :key="tipo"
+            :tipo="tipo"
+          ></input-range>
         </div>
       </div>
       <div class="sidebar-spacer"></div>
@@ -39,15 +42,24 @@ import SideBar from "@/components/comuns/SideBar.vue";
 import { onBeforeMount, watch, ref, onBeforeUnmount } from "vue";
 
 export default {
-  name: "GestaoAtendimento",
+  name: "GestaoView",
+  props: {
+    gestaoTipo: {
+      type: String,
+      required: true,
+    },
+    inputRanges: {
+      type: Array,
+      required: true,
+    },
+  },
   data: () => ({
     moduloClicado: "gestao_de_produtos",
   }),
-  setup() {
-    const gestaoTipo = "gestao_de_atendimento";
+  setup(props) {
     const store = modulesStore();
-    store.getChecked(gestaoTipo);
-    const module = store.getNestedFiltredModules(gestaoTipo);
+    store.getChecked(props.gestaoTipo);
+    const module = store.getNestedFiltredModules(props.gestaoTipo);
     let listaChecked = store.resourcesCheckedTrue;
     const totalValue = ref(store.totalValue);
     const valueConsultoria = ref(store.valueConsultoria);
@@ -80,7 +92,7 @@ export default {
       store.clearAllRanges();
     });
 
-    return { module, listaChecked, totalValue, valueConsultoria, gestaoTipo };
+    return { module, listaChecked, totalValue, valueConsultoria };
   },
   components: {
     ResourceList,
@@ -109,7 +121,7 @@ export default {
 }
 
 .modules-content {
-	margin-inline: 30px;
+  margin-inline: 30px;
 }
 
 .modules-container {
