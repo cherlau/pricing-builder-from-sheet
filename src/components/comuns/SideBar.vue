@@ -125,7 +125,7 @@ export default {
 }
 
 li {
-  font-size: 11px;
+  font-size: 12px;
   padding: 10px 30px;
   border-bottom: 1px dashed #e2e2f6;
   color: rgb(50, 68, 94);
@@ -193,7 +193,7 @@ label{
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1029px) {
   .sidebar-container {
     height: auto;
     position: fixed;

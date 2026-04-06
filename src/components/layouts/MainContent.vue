@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ManagementView from "@/components/views/GestaoView.vue";
+import ManagementView from "@/components/views/managerView.vue";
 
 const VIEW_CONFIG = {
   ServiceManagement: {

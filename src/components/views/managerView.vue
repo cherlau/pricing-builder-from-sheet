@@ -115,7 +115,7 @@ export default {
 }
 
 .content {
-  margin: auto;
+  margin: 0 auto 40px;
   width: 100%;
   max-width: 900px;
 }
@@ -132,7 +132,7 @@ export default {
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1029px) {
   #container {
     flex-direction: column;
   }

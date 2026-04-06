@@ -97,7 +97,7 @@ a{
 }
 
 .loading-container img {
-  max-width: 7%;
-  max-height: 7%;
+  max-width: 5%;
+  max-height: 5%;
 }
 </style>

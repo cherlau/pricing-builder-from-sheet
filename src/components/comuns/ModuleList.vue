@@ -90,7 +90,7 @@ button {
   flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1029px) {
   .modules-head {
     width: 100%;
     border-top-left-radius: 10px;

@@ -126,7 +126,7 @@ label{
   color: rgb(87, 110, 144);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1029px) {
   .resources-head {
     width: 100%;
     border-top-left-radius: 0;

@@ -213,7 +213,7 @@ span {
 }
 
 /* ── Responsive ─────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 1029px) {
   .card {
     padding: 20px 16px 18px;
     margin-bottom: 16px;
