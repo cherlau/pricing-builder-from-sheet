@@ -59,7 +59,7 @@ Planilha (Google Sheets)
 
 ## Estrutura do JSON
 
-O endpoint retorna um objeto com duas chaves principais: `discounts` e `modules`.
+O endpoint retorna um objeto com três chaves principais: `discounts` e `modules`.
 
 ```json
 {
@@ -82,7 +82,24 @@ O endpoint retorna um objeto com duas chaves principais: `discounts` e `modules`
         }
       }
     }
-  }
+  },
+    "plans": {
+        "gestao_de_empreendimentos": {
+            "title": "Gestão de Empreendimentos",
+            "items": [
+                "usuarios_ativos",
+                "espelho_de_vendas_gestao_de_unidades_e_tabelas",
+                "novidades",
+                "planilha",
+                "informacoes_arquivos_e_imagens",
+                "app_facilita_vendas_ios_e_android",
+                "hotsite_personalizado_para_corretor",
+                "crm_reservas",
+                "4_horas",
+                "api_publica"
+            ]
+        },
+    },
 }
 ```
 
