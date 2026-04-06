@@ -87,5 +87,25 @@ button {
   background-color: #1CCA85;
   border: 1px solid #1CCA85;;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .modules-head {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .modules-body {
+    height: auto;
+    max-height: 220px;
+    overflow-y: auto;
+    border-bottom-left-radius: 0;
+  }
+
+  button {
+    width: 100%;
+  }
 }
 </style>

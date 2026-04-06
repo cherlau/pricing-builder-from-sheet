@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div style="width: 400px; height: 100%;"></div>
+    <div class="sidebar-spacer"></div>
     <div class="content">
       <div>
         <h1>
@@ -41,6 +41,12 @@ export default {
 </script>
 
 <style scoped>
+  .sidebar-spacer {
+    width: 400px;
+    height: 100%;
+    flex-shrink: 0;
+  }
+
   .highlighted {
     border: 1px solid #7cc7ff;
     color: #32445e;
@@ -100,6 +106,42 @@ export default {
     width: 24px;
     background-color: #C8D7E8;
     border-radius: 50%;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-spacer {
+      display: none;
+    }
+
+    nav {
+      height: auto;
+      padding: 16px;
+      flex-direction: column;
+    }
+
+    .content {
+      margin: 0;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    .container-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 10px 14px;
+    }
+
+	.container-buttons button {
+		flex: 1;
+	}
+	
   }
   </style>
   

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="resource-list">
     <div class="resources-head">
       <h3> Recursos</h3>
     </div>
@@ -60,9 +60,12 @@ export default {
 </script>
 
 <style scoped>
+.resource-list {
+  width: 100%;
+}
+
 .resources-head{
   background-color: #0181e2;
-  width: 500px;
   border-top-right-radius: 10px;
   color: #fff;
   font-size: 15px;
@@ -124,4 +127,23 @@ label{
   color: rgb(87, 110, 144);
 }
 
+@media (max-width: 768px) {
+  .resources-head {
+    width: 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .resources-body {
+    height: auto;
+    max-height: 300px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .resources-body-list {
+    height: auto;
+    max-height: 260px;
+  }
+}
 </style>

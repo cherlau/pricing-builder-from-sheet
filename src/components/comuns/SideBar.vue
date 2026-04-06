@@ -192,4 +192,69 @@ label{
 label{
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    height: auto;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .sidebar-head {
+    display: none;
+  }
+
+  .sidebar-body {
+    display: none;
+  }
+
+  .sidebar-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .sidebar-price {
+    flex: 1;
+    padding: 12px 16px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .span-total-value {
+    font-size: 26px;
+  }
+
+  .span-consultoria {
+    font-size: 11px;
+  }
+
+  .sidebar-cycle {
+    flex: 1;
+    padding: 12px 16px;
+  }
+
+  .sidebar-cycle p {
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+
+  label {
+    margin: 0 8px 0 2px;
+    font-size: 11px;
+  }
+}
 </style>

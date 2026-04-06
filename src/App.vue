@@ -72,7 +72,7 @@ export default {
 
 *::-webkit-scrollbar-track {
   border-radius: 5px;
-  background-color: rgb(239, 240, 241);
+  background-color: #FFF;
 }
 
 body{
@@ -97,7 +97,7 @@ a{
 }
 
 .loading-container img {
-  max-width: 11%;
-  max-height: 11%;
+  max-width: 7%;
+  max-height: 7%;
 }
 </style>

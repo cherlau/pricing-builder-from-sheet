@@ -2,15 +2,17 @@
   <div >
     <div id="container">
       <div class="content">
-        <data class="modules-container">
-          <module-list :module="module" @moduloClicked="moduloClicado = $event"></module-list>
-          <resource-list :gestao-tipo="gestaoTipo" :modulo="moduloClicado" :resources="module"></resource-list>
-        </data>
+		<div class="modules-content">
+          <data class="modules-container">
+            <module-list :module="module" @moduloClicked="moduloClicado = $event"></module-list>
+            <resource-list :gestao-tipo="gestaoTipo" :modulo="moduloClicado" :resources="module"></resource-list>
+          </data>
+		</div>
   <input-range :tipo="'Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas'"></input-range>
   <input-range :tipo="'CRM (funil)'"></input-range> 
   <input-range :tipo="'Usuários'"></input-range>
 </div>
-      <div style="width: 400px;"></div>
+      <div class="sidebar-spacer"></div>
     
       <side-bar :gestao-tipo="gestaoTipo" :totalValue="totalValue" :listaChecked="listaChecked" :valueConsultoria="valueConsultoria"></side-bar>
     </div>
@@ -68,11 +70,21 @@ export default {
 #container {
   display: flex;
   justify-content: space-between;
+}
 
+.sidebar-spacer {
+  width: 400px;
+  flex-shrink: 0;
 }
 
 .content{
   margin: auto;
+  width: 100%;
+  max-width: 900px;
+}
+
+.modules-content {
+	margin-inline: 30px;
 }
 
 .modules-container{
@@ -80,5 +92,29 @@ export default {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 50px;
   margin-top: 55px;
+}
+
+@media (max-width: 768px) {
+  #container {
+    flex-direction: column;
+  }
+
+  .sidebar-spacer {
+    display: none;
+  }
+
+  .content {
+    margin: 0;
+    padding: 16px;
+    padding-bottom: 140px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modules-container {
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
 }
 </style>

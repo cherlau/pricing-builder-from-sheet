@@ -1,23 +1,45 @@
 <template>
-    <div class="input-range">
-      <div>
-        <label for="slider">{{ tipo }}</label>
-        <br><span>Personalize a quantidade desejada.</span>
-        <br>
-        <div class="input-range-content">
-          <input
-            type="range"
-            id="slider"
-            v-model="selectedValue"
-            :min="limitsRange[1]"
-            :max="limitsRange[2]"
-            :step="limitsRange[0]"
+  <div class="input-range">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="label-group">
+          <label for="slider">{{ tipo }}</label>
+          <span>Personalize a quantidade desejada.</span>
+        </div>
+        <div class="value-badge">{{ selectedValue }}</div>
+      </div>
+
+      <div class="slider-wrapper">
+        <input
+          type="range"
+          id="slider"
+          class="slider"
+          v-model="selectedValue"
+          :min="limitsRange[1]"
+          :max="limitsRange[2]"
+          :step="limitsRange[0]"
+          :style="{
+            '--fill': ((selectedValue - limitsRange[1]) / (limitsRange[2] - limitsRange[1])) * 100 + '%'
+          }"
+        />
+
+        <div class="step-markers">
+          <span
+            v-for="step in Array.from(
+              { length: Math.round((limitsRange[2] - limitsRange[1]) / limitsRange[0]) + 1 },
+              (_, i) => limitsRange[1] + i * limitsRange[0]
+            )"
+            :key="step"
+            class="step-dot"
+            :class="{ 'step-dot--filled': step <= Number(selectedValue) }"
           />
-          <p>Valor selecionado: {{ selectedValue }}</p>
         </div>
       </div>
+
     </div>
-  </template>
+  </div>
+</template>
   
 <script>
 import { modulesStore } from '@/store/modules.js';
@@ -54,38 +76,161 @@ setup(props) {
 </script>
   
 <style scoped>
-.input-range{
-  color: rgb(50, 68, 94);
+/* ── Card ──────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  padding: 28px 30px 24px;
+  margin-bottom: 28px;
 }
 
-input{
-  width: 100%;
-  cursor: pointer;
+/* ── Header row ─────────────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
-label{
+.label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+label {
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 5px;
+  font-weight: 700;
+  color: #32445E;
+  line-height: 1.2;
 }
 
-span{
+span {
   font-size: 12px;
   font-weight: 400;
+  color: #8fa3be;
 }
 
-p{
-  font-size: 13px;
-  font-weight: 500;
+/* ── Value badge ────────────────────────────────────── */
+.value-badge {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0091FF;
+  line-height: 1;
+  align-self: center;
 }
 
-.input-range-content{
-  background-color: #fff;
-  padding: 30px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  margin-bottom: 40px;
-  margin-top: 15px;
+/* ── Slider wrapper ─────────────────────────────────── */
+.slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* ── Range input — reset & track ────────────────────── */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    #0091FF var(--fill, 0%),
+    #C8D7E8 var(--fill, 0%)
+  );
+}
+
+/* webkit track (background already on the element) */
+.slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* firefox track + progress */
+.slider::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #C8D7E8;
+}
+.slider::-moz-range-progress {
+  height: 6px;
+  border-radius: 3px;
+  background: #0091FF;
+}
+
+/* ── Thumb ──────────────────────────────────────────── */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1CCA85;
+  box-shadow: 0 2px 8px rgba(28, 202, 133, 0.45);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  margin-top: -8px;
+}
+.slider:active::-webkit-slider-thumb {
+  transform: scale(1.18);
+  box-shadow: 0 4px 14px rgba(28, 202, 133, 0.55);
+}
+
+.slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1CCA85;
+  border: none;
+  box-shadow: 0 2px 8px rgba(28, 202, 133, 0.45);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.slider:active::-moz-range-thumb {
+  transform: scale(1.18);
+}
+
+/* ── Step markers ───────────────────────────────────── */
+.step-markers {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 11px; /* alinha com o centro do thumb nas extremidades */
+}
+
+.step-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #C8D7E8;
+  transition: background 0.15s ease;
+}
+.step-dot--filled {
+  background: #0091FF;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .card {
+    padding: 20px 16px 18px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 15px;
+  }
+
+  .value-badge {
+    font-size: 26px;
+  }
+
+  .slider::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+    margin-top: -11px;
+  }
+}
 </style>
