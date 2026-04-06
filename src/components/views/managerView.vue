@@ -142,7 +142,7 @@ export default {
   }
 
   .content {
-    margin: 0;
+    margin-inline: auto;
     padding: 16px;
     padding-bottom: 140px;
     width: 100%;
@@ -153,6 +153,10 @@ export default {
     flex-direction: column;
     margin-top: 20px;
     margin-bottom: 44px;
+  }
+
+  .modules-content {
+    margin-inline: 0;
   }
 }
 </style>

@@ -21,17 +21,24 @@
         </div>
         <div class="sidebar-cycle">
           <p>Ciclo de Pagamento</p>
-          <input type="radio" v-model="paymentCycleValue" value="0" :id="'monthlyRadio'" class="custom-radio">
-          <label :for="'monthlyRadio'" @click.prevent="selectRadio(0)">Mensal</label>
-
-          <input type="radio" v-model="paymentCycleValue" value="1" :id="'quarterlyRadio'" class="custom-radio">
-          <label :for="'quarterlyRadio'" @click.prevent="selectRadio(1)">Trimestral</label>
-
-          <input type="radio" v-model="paymentCycleValue" value="2" :id="'semiannualRadio'" class="custom-radio">
-          <label :for="'semiannualRadio'" @click.prevent="selectRadio(2)">Semestral</label>
-
-          <input type="radio" v-model="paymentCycleValue" value="3" :id="'annualRadio'" class="custom-radio">
-          <label :for="'annualRadio'" @click.prevent="selectRadio(3)">Anual</label>
+          <div class="cycle-grid">
+            <div class="cycle-card">
+              <input type="radio" v-model="paymentCycleValue" value="0" :id="'monthlyRadio'" class="custom-radio">
+              <label :for="'monthlyRadio'" @click.prevent="selectRadio(0)">Mensal</label>
+            </div>
+            <div class="cycle-card">
+              <input type="radio" v-model="paymentCycleValue" value="1" :id="'quarterlyRadio'" class="custom-radio">
+              <label :for="'quarterlyRadio'" @click.prevent="selectRadio(1)">Trimestral</label>
+            </div>
+            <div class="cycle-card">
+              <input type="radio" v-model="paymentCycleValue" value="2" :id="'semiannualRadio'" class="custom-radio">
+              <label :for="'semiannualRadio'" @click.prevent="selectRadio(2)">Semestral</label>
+            </div>
+            <div class="cycle-card">
+              <input type="radio" v-model="paymentCycleValue" value="3" :id="'annualRadio'" class="custom-radio">
+              <label :for="'annualRadio'" @click.prevent="selectRadio(3)">Anual</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -160,40 +167,76 @@ li {
   padding: 20px;
 }
 
-.sidebar-cycle p{
-  margin-bottom: 10px;
+.sidebar-cycle p {
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
-label{
-  margin: 0 12px 0 2px;
+.cycle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.cycle-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cycle-card label {
+  color: #fff;
   font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.cycle-card:has(input:checked) label {
+  color: #ffffff;
 }
 
 .custom-radio {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: #fff;
   width: 13px;
   height: 13px;
-  border: 2px solid #fff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background-color: #fff;
   border-radius: 50%;
   outline: none;
   cursor: pointer;
-  margin-right: 5px;
-  vertical-align: middle;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .custom-radio:checked {
-  background-color: #00a25d;
-  border-color: #fff;
+  background-color: #08b671;
+  border-color: #08b671;
+  box-shadow: inset 0 0 0 2px #fff;
 }
 
-label{
-  cursor: pointer;
+.cycle-card:has(input:checked) .custom-radio:checked {
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: none;
 }
 
 @media (max-width: 1029px) {
+  .cycle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
   .sidebar-container {
     height: auto;
     position: fixed;
@@ -244,7 +287,7 @@ label{
 
   .sidebar-cycle {
     flex: 1;
-    padding: 12px 16px;
+    padding: 16px 12px 15px 16px;
   }
 
   .sidebar-cycle p {
@@ -252,9 +295,23 @@ label{
     font-size: 11px;
   }
 
-  label {
-    margin: 0 8px 0 2px;
-    font-size: 11px;
+  .cycle-grid {
+    gap: 5px;
+  }
+
+  .cycle-card {
+    padding: 3px 8px;
+    gap: 6px;
+    border-radius: 6px;
+  }
+
+  .cycle-card label {
+    font-size: 10px;
+  }
+
+  .custom-radio {
+    width: 11px;
+    height: 11px;
   }
 }
 </style>

@@ -40,7 +40,6 @@ export const modulesStore = defineStore({
       return modulesObject;
     },
     setDiscont(){
-
       const discounts = this.objectData.discounts
       let valueDiscount
 
@@ -67,7 +66,6 @@ export const modulesStore = defineStore({
       this.consultancyValue = total
     },
     getResources(clickedModule, managementType){
-
       const resourcesArray = this.resourcedList
       const allowedItems = this.objectData?.plans[managementType].items
       const filteredResources = []
@@ -164,7 +162,6 @@ export const modulesStore = defineStore({
       }
     },
     getLimits(rangeType){
-
       if(rangeType === 'CRM')
         return this.resourcedList.gestao_de_atendimentos.items.crm.gestao_de_atendimento.split("/")
 

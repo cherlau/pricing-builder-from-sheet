@@ -171,7 +171,9 @@ button {
   }
 
   .content {
-	max-width: 800px;
+	width: 100%;
+	max-width: 850px;
+	margin-inline: auto;
   }
 
   h1 {

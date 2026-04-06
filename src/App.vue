@@ -18,7 +18,6 @@ import { ref, onMounted } from 'vue';
 import { modulesStore } from '@/store/modules.js';
 import axios from 'axios';
 
-
 export default {
   name: 'App',
   data: () => ({
@@ -57,7 +56,6 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
 }
 
 *::-webkit-scrollbar {
