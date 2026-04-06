@@ -14,9 +14,11 @@
 <script>
 import TopContent from '@/components/layouts/TopContent.vue';
 import MainContent from '@/components/layouts/MainContent.vue';
+
 import { ref, onMounted } from 'vue';
+
 import { modulesStore } from '@/store/modules.js';
-import axios from 'axios';
+import mockData from '@/mocks/mockData.js';
 
 export default {
   name: 'App',
@@ -26,20 +28,12 @@ export default {
   setup() {
     const store = modulesStore();
     const json = ref(store);
-    const apiLoaded = ref(false); 
+    const apiLoaded = ref(false);
 
-    const fetchModules = async () => {
-      try {
-        const response = await axios.get('https://gestao.appfacilita.com/wp-json/v1/facilita/?tipo=construtoras&version=7');
-        
-        store.setResponseData(response.data); 
-        apiLoaded.value = true; 
-      } catch (error) {
-        console.error('Erro ao buscar módulos:', error);
-      }
-    };
-
-    onMounted(fetchModules); 
+    onMounted(() => {
+      store.setResponseData(mockData);
+      apiLoaded.value = true;
+    });
 
     return { json, apiLoaded };
   },
