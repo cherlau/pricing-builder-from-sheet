@@ -7,8 +7,8 @@
       <ul v-if="module">
         <template v-for="(module, key) in module" :key="key">
           <li v-if="!Array.isArray(module.items)" >
-            <button  @click="moduloClicked(key)" :class="{ 'clicked-button': key === clickedButton }">
-              <span class="span-point"></span> 
+            <button  @click="moduleClicked(key)" :class="{ 'clicked-button': key === clickedButton }">
+              <span class="span-point"></span>
               {{ module.title }}
             </button>
           </li>
@@ -17,7 +17,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
@@ -29,12 +29,12 @@ export default {
     };
   },
   methods: {
-    exibirRecurso(module){
-      this.$emit('exibirRecurso', module);
+    displayResource(module){
+      this.$emit('displayResource', module);
     },
-    moduloClicked(clicked){
+    moduleClicked(clicked){
       this.clickedButton = clicked;
-      this.$emit('moduloClicked', clicked);
+      this.$emit('moduleClicked', clicked);
     }
   }
 };

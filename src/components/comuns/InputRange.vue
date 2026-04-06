@@ -4,7 +4,7 @@
 
       <div class="card-header">
         <div class="label-group">
-          <label for="slider">{{ tipo }}</label>
+          <label for="slider">{{ rangeType }}</label>
           <span>Personalize a quantidade desejada.</span>
         </div>
         <div class="value-badge">{{ selectedValue }}</div>
@@ -40,7 +40,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import { modulesStore } from '@/store/modules.js';
 import { ref, watch, onMounted } from 'vue';
@@ -51,30 +51,30 @@ export default {
     limits: {
       type: Array,
     },
-    tipo: {
+    rangeType: {
       type: String,
     }
   },
-setup(props) {
-  const store = modulesStore();
-  const tipo = ref(props.tipo);
-  const limitsRange = store.getLimits(tipo.value);
-  const selectedValue = ref(limitsRange[1]);
+  setup(props) {
+    const store = modulesStore();
+    const rangeType = ref(props.rangeType);
+    const limitsRange = store.getLimits(rangeType.value);
+    const selectedValue = ref(limitsRange[1]);
 
-  watch(selectedValue, (selected) => {
-    store.setRange(tipo.value, selected);
-  });
+    watch(selectedValue, (selected) => {
+      store.setRange(rangeType.value, selected);
+    });
 
-  onMounted(() => {
-    store.setRange(tipo.value, selectedValue.value);
-  })
+    onMounted(() => {
+      store.setRange(rangeType.value, selectedValue.value);
+    })
 
-  return { selectedValue, limitsRange };
-},
+    return { selectedValue, limitsRange };
+  },
 
 };
 </script>
-  
+
 <style scoped>
 /* ── Card ──────────────────────────────────────────── */
 .card {

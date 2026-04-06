@@ -6,28 +6,28 @@
           <data class="modules-container">
             <module-list
               :module="module"
-              @moduloClicked="moduloClicado = $event"
+              @module-clicked="clickedModule = $event"
             ></module-list>
             <resource-list
-              :gestao-tipo="gestaoTipo"
-              :modulo="moduloClicado"
+              :management-type="managementType"
+              :module="clickedModule"
               :resources="module"
             ></resource-list>
           </data>
           <input-range
-            v-for="tipo in inputRanges"
-            :key="tipo"
-            :tipo="tipo"
+            v-for="rangeType in inputRanges"
+            :key="rangeType"
+            :range-type="rangeType"
           ></input-range>
         </div>
       </div>
       <div class="sidebar-spacer"></div>
 
       <side-bar
-        :gestao-tipo="gestaoTipo"
-        :totalValue="totalValue"
-        :listaChecked="listaChecked"
-        :valueConsultoria="valueConsultoria"
+        :management-type="managementType"
+        :total-value="totalValue"
+        :checked-list="checkedList"
+        :consultancy-value="consultancyValue"
       ></side-bar>
     </div>
   </div>
@@ -42,9 +42,9 @@ import SideBar from "@/components/comuns/SideBar.vue";
 import { onBeforeMount, watch, ref, onBeforeUnmount } from "vue";
 
 export default {
-  name: "GestaoView",
+  name: "ManagementView",
   props: {
-    gestaoTipo: {
+    managementType: {
       type: String,
       required: true,
     },
@@ -54,15 +54,15 @@ export default {
     },
   },
   data: () => ({
-    moduloClicado: "gestao_de_produtos",
+    clickedModule: "gestao_de_produtos",
   }),
   setup(props) {
     const store = modulesStore();
-    store.getChecked(props.gestaoTipo);
-    const module = store.getNestedFiltredModules(props.gestaoTipo);
-    let listaChecked = store.resourcesCheckedTrue;
+    store.getChecked(props.managementType);
+    const module = store.getNestedFilteredModules(props.managementType);
+    let checkedList = store.checkedResources;
     const totalValue = ref(store.totalValue);
-    const valueConsultoria = ref(store.valueConsultoria);
+    const consultancyValue = ref(store.consultancyValue);
 
     watch(
       () => store.totalValue,
@@ -71,28 +71,28 @@ export default {
       }
     );
     watch(
-      () => store.valueConsultoria,
+      () => store.consultancyValue,
       (newValue) => {
-        valueConsultoria.value = newValue;
+        consultancyValue.value = newValue;
       }
     );
     watch(
-      () => store.resourcesCheckedTrue,
+      () => store.checkedResources,
       (newValue) => {
-        listaChecked = newValue;
+        checkedList = newValue;
       }
     );
 
     onBeforeMount(() => {
       store.calcTotal();
-      store.getConsultoria();
+      store.getConsultancy();
     });
 
     onBeforeUnmount(() => {
       store.clearAllRanges();
     });
 
-    return { module, listaChecked, totalValue, valueConsultoria };
+    return { module, checkedList, totalValue, consultancyValue };
   },
   components: {
     ResourceList,
@@ -121,7 +121,7 @@ export default {
 }
 
 .modules-content {
-  margin-inline: 30px;
+  margin-inline: 35px;
 }
 
 .modules-container {

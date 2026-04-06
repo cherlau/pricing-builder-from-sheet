@@ -1,23 +1,23 @@
 <template>
   <div>
-    <gestao-view
+    <management-view
       v-if="viewConfig"
-      :gestao-tipo="viewConfig.gestaoTipo"
+      :management-type="viewConfig.managementType"
       :input-ranges="viewConfig.inputRanges"
-    ></gestao-view>
+    ></management-view>
   </div>
 </template>
 
 <script>
-import GestaoView from "@/components/views/GestaoView.vue";
+import ManagementView from "@/components/views/GestaoView.vue";
 
 const VIEW_CONFIG = {
-  GestaoAtendimento: {
-    gestaoTipo: "gestao_de_atendimento",
+  ServiceManagement: {
+    managementType: "gestao_de_atendimento",
     inputRanges: ["CRM", "Usuários"],
   },
-  GestaoEmpreendimentos: {
-    gestaoTipo: "gestao_de_empreendimentos",
+  DevelopmentManagement: {
+    managementType: "gestao_de_empreendimentos",
     inputRanges: [
       "CRM (reservas)",
       "Espelho de Vendas - Gestão de Unidades e Tabelas",
@@ -25,8 +25,8 @@ const VIEW_CONFIG = {
       "API Pública",
     ],
   },
-  GestaoVendas: {
-    gestaoTipo: "gestao_de_vendas",
+  SalesManagement: {
+    managementType: "gestao_de_vendas",
     inputRanges: [
       "Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas",
       "CRM (funil)",
@@ -49,7 +49,7 @@ export default {
     },
   },
   components: {
-    GestaoView,
+    ManagementView,
   },
 };
 </script>

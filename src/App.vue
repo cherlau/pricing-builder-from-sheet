@@ -22,7 +22,7 @@ import axios from 'axios';
 export default {
   name: 'App',
   data: () => ({
-    component: 'GestaoAtendimento'
+    component: 'ServiceManagement'
   }),
   setup() {
     const store = modulesStore();

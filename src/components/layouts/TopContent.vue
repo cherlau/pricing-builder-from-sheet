@@ -9,13 +9,13 @@
         </h1>
       </div>
       <div class="container-buttons">
-        <button :class="{ 'highlighted': activeButton === 'GestaoAtendimento' }" @click="navigateTo('GestaoAtendimento')">
+        <button :class="{ 'highlighted': activeButton === 'ServiceManagement' }" @click="navigateTo('ServiceManagement')">
           <span class="span-point"></span>Gestão de Atendimento
         </button>
-        <button :class="{ 'highlighted': activeButton === 'GestaoEmpreendimentos' }" @click="navigateTo('GestaoEmpreendimentos')">
+        <button :class="{ 'highlighted': activeButton === 'DevelopmentManagement' }" @click="navigateTo('DevelopmentManagement')">
           <span class="span-point"></span>Gestão de Empreendimentos
         </button>
-        <button :class="{ 'highlighted': activeButton === 'GestaoVendas' }" @click="navigateTo('GestaoVendas')">
+        <button :class="{ 'highlighted': activeButton === 'SalesManagement' }" @click="navigateTo('SalesManagement')">
           <span class="span-point"></span>Gestão de vendas
         </button>
       </div>
@@ -28,7 +28,7 @@ export default {
   name: 'TopContent',
   data() {
     return {
-      activeButton: 'GestaoAtendimento', 
+      activeButton: 'ServiceManagement',
     };
   },
   methods: {
@@ -55,14 +55,14 @@ export default {
   .highlighted .span-point{
     background-color: #1CCA85;
 }
-  
+
   nav {
     background-color: aliceblue;
     height: 15vh;
     display: flex;
     flex-direction: row-reverse;
   }
-  
+
   .content {
     display: flex;
     flex-direction: column;
@@ -70,22 +70,22 @@ export default {
     gap: 12px;
     margin: auto;
   }
-  
+
   h1 {
     font-size: 30px;
     font-weight: 700;
     color: #32445E;
   }
-  
+
   .span-highlight {
     color: #0091FF;
   }
-  
+
   .container-buttons {
     display: flex;
     gap: 20px;
   }
-  
+
   button {
     display: flex;
     font-size: 16px;
@@ -99,7 +99,7 @@ export default {
     cursor: pointer;
     user-select: none;
   }
-  
+
   .span-point {
     display: inline-block;
     height: 24px;
@@ -141,7 +141,6 @@ export default {
 	.container-buttons button {
 		flex: 1;
 	}
-	
+
   }
   </style>
-  

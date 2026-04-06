@@ -5,7 +5,7 @@ export const modulesStore = defineStore({
   state: () => ({
     objectData: {},
     resourcedList: [],
-    resourcesCheckedTrue: [],
+    checkedResources: [],
     totalCheckedValue: 0,
     rangeCrm: 0,
     rangeUser: 0,
@@ -15,7 +15,7 @@ export const modulesStore = defineStore({
     rangeApiPublica: 0,
     rangeEspelhoVen: 0,
     rangeCrmFunil: 0,
-    valueConsultoria: 0,
+    consultancyValue: 0,
     paymentCycle: 0,
     totalValue: 0
   }),
@@ -23,29 +23,29 @@ export const modulesStore = defineStore({
     async setResponseData(modules) {
       this.objectData = modules
     },
-    getNestedFiltredModules(tipo) {
-      const arrayComRecursos = this.resourcedList;
-      const objetoComModulos = {};
-      const modulosUnicos = new Set();
-    
-      for (const modulo in arrayComRecursos) {
-        for (const recurso in arrayComRecursos[modulo].items) {
-          if (arrayComRecursos[modulo].items[recurso][tipo] !== '-' && !modulosUnicos.has(modulo)) {
-            objetoComModulos[modulo] = arrayComRecursos[modulo];
-            modulosUnicos.add(modulo);
+    getNestedFilteredModules(managementType) {
+      const resourcesArray = this.resourcedList;
+      const modulesObject = {};
+      const uniqueModules = new Set();
+
+      for (const moduleKey in resourcesArray) {
+        for (const resource in resourcesArray[moduleKey].items) {
+          if (resourcesArray[moduleKey].items[resource][managementType] !== '-' && !uniqueModules.has(moduleKey)) {
+            modulesObject[moduleKey] = resourcesArray[moduleKey];
+            uniqueModules.add(moduleKey);
           }
         }
       }
-        
-      return objetoComModulos;
+
+      return modulesObject;
     },
     setDiscont(){
-      
+
       const discounts = this.objectData.discounts
       let valueDiscount
 
       for(const cicle in discounts){
-        
+
         if(this.paymentCycle == cicle){
           valueDiscount = discounts[cicle].value
         }
@@ -54,58 +54,58 @@ export const modulesStore = defineStore({
       const discount = 1 - (valueDiscount / 100)
       this.totalValue = this.totalValue * discount
     },
-    getConsultoria(){
+    getConsultancy(){
       let total = 0
-  
-      for (const i in this.resourcesCheckedTrue) {
-    
-        if(this.resourcesCheckedTrue[i].implantacao != 0){
-          total += parseFloat(this.resourcesCheckedTrue[i].implantacao)
+
+      for (const i in this.checkedResources) {
+
+        if(this.checkedResources[i].implantacao != 0){
+          total += parseFloat(this.checkedResources[i].implantacao)
         }
       }
 
-      this.valueConsultoria = total
+      this.consultancyValue = total
     },
-    getResources(moduloClicado, tipo){
+    getResources(clickedModule, managementType){
 
-      const arrayComRecursos = this.resourcedList
-      const arrayPermitidos = this.objectData?.plans[tipo].items
-      const recursosFiltrados = []
+      const resourcesArray = this.resourcedList
+      const allowedItems = this.objectData?.plans[managementType].items
+      const filteredResources = []
 
-      for (const i in arrayComRecursos[moduloClicado]?.items) {
-    
-        const item = arrayComRecursos[moduloClicado]?.items[i]
-            
-        if (item[tipo] !== '-' ) {
+      for (const i in resourcesArray[clickedModule]?.items) {
 
-          if(arrayPermitidos.includes(item.key)){
-            recursosFiltrados.push(item)
+        const item = resourcesArray[clickedModule]?.items[i]
+
+        if (item[managementType] !== '-' ) {
+
+          if(allowedItems.includes(item.key)){
+            filteredResources.push(item)
           } else {
-            recursosFiltrados.push(item)
+            filteredResources.push(item)
           }
         }
       }
 
-      return recursosFiltrados
+      return filteredResources
     },
-    getChecked(tipo){
-      this.resourcesCheckedTrue = []
-      
+    getChecked(managementType){
+      this.checkedResources = []
+
       const modules = this.objectData.modules
-      const arrayPermitidos = this.objectData?.plans[tipo].items
+      const allowedItems = this.objectData?.plans[managementType].items
 
       for(const i in modules){
         for(const j in modules[i].items){
 
           modules[i].items[j].checked = false
 
-          if (modules[i].items[j][tipo] !== '-' ){
+          if (modules[i].items[j][managementType] !== '-' ){
 
-            if(arrayPermitidos.includes(j)){
+            if(allowedItems.includes(j)){
 
               modules[i].items[j].checked = true
-              this.resourcesCheckedTrue.push(modules[i].items[j] )
-            } 
+              this.checkedResources.push(modules[i].items[j])
+            }
           }
         }
       }
@@ -114,21 +114,21 @@ export const modulesStore = defineStore({
       this.calculateTotalCheckedValue()
       this.calcTotal()
     },
-    calcularChecked() {
+    calculateChecked() {
       for (const i in this.resourcedList) {
         for (const j in this.resourcedList[i].items) {
           const item = this.resourcedList[i].items[j]
-    
-          if (item.checked && !this.resourcesCheckedTrue.includes(item)) {
-            
-            this.resourcesCheckedTrue.push(item)
 
-          } else if (!item.checked && this.resourcesCheckedTrue.includes(item)) {
+          if (item.checked && !this.checkedResources.includes(item)) {
 
-            const index = this.resourcesCheckedTrue.indexOf(item)
+            this.checkedResources.push(item)
+
+          } else if (!item.checked && this.checkedResources.includes(item)) {
+
+            const index = this.checkedResources.indexOf(item)
 
             if (index !== -1) {
-              this.resourcesCheckedTrue.splice(index, 1)
+              this.checkedResources.splice(index, 1)
             }
           }
         }
@@ -137,13 +137,13 @@ export const modulesStore = defineStore({
     },
     calculateTotalCheckedValue() {
       let totalValue = 0
-  
+
       for (const i in this.resourcedList) {
         for (const j in this.resourcedList[i].items) {
 
           const item = this.resourcedList[i].items[j]
 
-          if (item.checked && item.preco) 
+          if (item.checked && item.preco)
             totalValue += parseFloat(item.preco)
         }
       }
@@ -163,56 +163,56 @@ export const modulesStore = defineStore({
         this.totalValue = this.totalCheckedValue + this.rangeEspelhoVen + this.rangeCrmFunil + this.rangeUser
       }
     },
-    getLimits(tipo){
+    getLimits(rangeType){
 
-      if(tipo === 'CRM') 
+      if(rangeType === 'CRM')
         return this.resourcedList.gestao_de_atendimentos.items.crm.gestao_de_atendimento.split("/")
 
-      if(tipo === 'Usuários') 
+      if(rangeType === 'Usuários')
         return this.resourcedList.gestao_de_usuarios.items.usuarios.limite.split("/")
 
-      if(tipo === 'CRM (reservas)')
+      if(rangeType === 'CRM (reservas)')
         return this.resourcedList.gestao_de_produtos.items.crm_reservas.limite.split("/")
 
-      if(tipo === 'Espelho de Vendas - Gestão de Unidades e Tabelas')
+      if(rangeType === 'Espelho de Vendas - Gestão de Unidades e Tabelas')
         return this.resourcedList.gestao_de_vendas.items.espelho_de_vendas_gestao_de_unidades_e_tabelas.limite.split("/")
 
-      if(tipo === 'Usuários Ativos')
+      if(rangeType === 'Usuários Ativos')
         return this.resourcedList.gestao_de_usuarios.items.usuarios_ativos.limite.split("/")
 
-      if(tipo === 'API Pública')
+      if(rangeType === 'API Pública')
         return this.resourcedList.integracoes.items.api_publica.limite.split("/")
 
-      if(tipo === 'Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas')
+      if(rangeType === 'Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas')
         return this.resourcedList.gestao_de_vendas.items.espelho_de_vendas_gestao_de_unidades_reservas_e_tabelas.limite.split("/")
 
-      if(tipo === 'CRM (funil)')
+      if(rangeType === 'CRM (funil)')
         return this.resourcedList.gestao_de_atendimentos.items.crm_funil.gestao_de_vendas.split("/")
     },
-    setRange(tipo, range){
+    setRange(rangeType, range){
 
-      if(tipo === 'CRM')
+      if(rangeType === 'CRM')
         this.rangeCrm = range * this.resourcedList.gestao_de_atendimentos.items.crm.preco_unitario
-      
-      if(tipo === 'Usuários'){
+
+      if(rangeType === 'Usuários'){
         this.rangeUser =  range * this.resourcedList.gestao_de_usuarios.items.usuarios.preco_unitario
       }
-      if(tipo === 'CRM (reservas)')
+      if(rangeType === 'CRM (reservas)')
         this.rangeCrmReserva =  range * this.resourcedList.gestao_de_produtos.items.crm_reservas.preco_unitario
 
-      if(tipo === 'Espelho de Vendas - Gestão de Unidades e Tabelas')
+      if(rangeType === 'Espelho de Vendas - Gestão de Unidades e Tabelas')
         this.rangeEspelhoEmp =  range * this.resourcedList.gestao_de_vendas.items.espelho_de_vendas_gestao_de_unidades_e_tabelas.preco_unitario
 
-      if(tipo === 'Usuários Ativos')
+      if(rangeType === 'Usuários Ativos')
         this.rangeUsersAtivos = range * this.resourcedList.gestao_de_usuarios.items.usuarios_ativos.preco_unitario
 
-      if(tipo === 'API Pública')
+      if(rangeType === 'API Pública')
         this.rangeApiPublica = range * this.resourcedList.integracoes.items.api_publica.preco_unitario
 
-      if(tipo === 'Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas'){
+      if(rangeType === 'Espelho de Vendas - Gestão de Unidades, Reservas e Tabelas'){
         this.rangeEspelhoVen = range * this.resourcedList.gestao_de_vendas.items.espelho_de_vendas_gestao_de_unidades_reservas_e_tabelas.preco_unitario
       }
-      if(tipo === 'CRM (funil)'){
+      if(rangeType === 'CRM (funil)'){
         this.rangeCrmFunil = range * this.resourcedList.gestao_de_atendimentos.items.crm_funil.preco_unitario
       }
 

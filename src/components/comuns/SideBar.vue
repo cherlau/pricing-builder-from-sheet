@@ -2,11 +2,11 @@
   <div class="sidebar-container">
     <div class="sidebar">
       <div class="sidebar-head">
-        <span>{{ formattedNameGestao }}</span>
+        <span>{{ formattedManagementName }}</span>
       </div>
       <div class="sidebar-body">
         <ul>
-          <li v-for="(item1, key1) in listaChecked" :key="key1">
+          <li v-for="(item1, key1) in checkedList" :key="key1">
             {{ item1.nome_completo }}
           </li>
         </ul>
@@ -16,7 +16,7 @@
           <template v-if="!isNaN(totalValue) && !isNaN(totalValue)">
             <span>R$<span class="span-total-value">{{ formattedTotalValue }}</span>/mês</span>
             <br>
-            <span class="span-consultoria">+ Consultoria: {{ formattedValueConsultoria }}</span>
+            <span class="span-consultoria">+ Consultoria: {{ formattedConsultancyValue }}</span>
           </template>
         </div>
         <div class="sidebar-cycle">
@@ -46,9 +46,9 @@ export default {
   name: 'SideBar',
   props: {
     totalValue: Number,
-    listaChecked: Array,
-    valueConsultoria: Number,
-    gestaoTipo: String
+    checkedList: Array,
+    consultancyValue: Number,
+    managementType: String
   },
   setup(props) {
     const store = modulesStore();
@@ -68,7 +68,7 @@ export default {
       });
     };
 
-    const formatGestaoTipo = (name) => {
+    const formatManagementType = (name) => {
       switch (name) {
         case 'gestao_de_atendimento': return 'Gestão de Atendimento';
         case 'gestao_de_empreendimentos': return 'Gestão de Empreendimentos';
@@ -85,10 +85,10 @@ export default {
     };
 
     const formattedTotalValue = computed(() => formatCurrency(props.totalValue));
-    const formattedValueConsultoria = computed(() => formatCurrency(props.valueConsultoria));
-    const formattedNameGestao = computed(() => formatGestaoTipo(props.gestaoTipo));
+    const formattedConsultancyValue = computed(() => formatCurrency(props.consultancyValue));
+    const formattedManagementName = computed(() => formatManagementType(props.managementType));
 
-    return { paymentCycleValue, formattedTotalValue, formattedValueConsultoria, formattedNameGestao, selectRadio  };
+    return { paymentCycleValue, formattedTotalValue, formattedConsultancyValue, formattedManagementName, selectRadio };
   }
 }
 </script>
@@ -176,8 +176,8 @@ label{
   background-color: #fff;
   width: 13px;
   height: 13px;
-  border: 2px solid #fff; 
-  border-radius: 50%; 
+  border: 2px solid #fff;
+  border-radius: 50%;
   outline: none;
   cursor: pointer;
   margin-right: 5px;

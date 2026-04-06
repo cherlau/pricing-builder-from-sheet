@@ -6,9 +6,9 @@
     <div class="resources-body">
       <div class="resources-body-list">
         <ul v-if="resources">
-          <li v-for="(item, index) in recursosFiltrados" :key="index">  
+          <li v-for="(item, index) in filteredResources" :key="index">
             <input type="checkbox" :id="'checkbox_' + index" v-model="item.checked" @change="checkboxChange(item)" class="custom-checkbox">
-            <label :for="'checkbox_' + index">{{ item.nome }}</label>  
+            <label :for="'checkbox_' + index">{{ item.nome }}</label>
           </li>
         </ul>
       </div>
@@ -23,17 +23,16 @@ import { watch, ref, onMounted } from 'vue';
 export default {
   props: {
     resources: Object,
-    gestaoTipo: String,
-    modulo: String,
+    managementType: String,
+    module: String,
   },
   setup(props) {
     const store = modulesStore();
-    let recursosFiltrados = ref([])
+    let filteredResources = ref([])
 
-
-    const obterRecursosFiltrados = async (novoModulo) => {
+    const fetchFilteredResources = async (newModule) => {
       try {
-        recursosFiltrados.value = await store.getResources(novoModulo, props.gestaoTipo)
+        filteredResources.value = await store.getResources(newModule, props.managementType)
 
       } catch (error) {
         console.error('Erro durante a execução do watch:', error)
@@ -41,20 +40,20 @@ export default {
     }
 
     onMounted(() => {
-      obterRecursosFiltrados(props.modulo)
+      fetchFilteredResources(props.module)
     })
 
-    watch(() => props.modulo, (novoModulo) => {
-      obterRecursosFiltrados(novoModulo)
+    watch(() => props.module, (newModule) => {
+      fetchFilteredResources(newModule)
     })
 
     const checkboxChange = () => {
-      store.calcularChecked()
+      store.calculateChecked()
       store.calculateTotalCheckedValue();
-      store.getConsultoria()
+      store.getConsultancy()
     };
 
-    return { recursosFiltrados, checkboxChange }
+    return { filteredResources, checkboxChange }
   },
 };
 </script>
@@ -120,7 +119,7 @@ label{
 .custom-checkbox:checked {
   background-color: #1cca85;
   border-color: #1cca85;
-  color: #fff; 
+  color: #fff;
 }
 
 .custom-checkbox:checked + label{
