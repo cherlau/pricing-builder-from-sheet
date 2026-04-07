@@ -1,4 +1,4 @@
-# Pricing Builder — Facilita
+# Pricing Builder
 
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-42b883?style=flat-square&logo=vue.js)
 ![Pinia](https://img.shields.io/badge/Pinia-2.x-f7d336?style=flat-square&logo=pinia)
