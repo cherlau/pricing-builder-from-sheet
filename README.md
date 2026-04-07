@@ -59,58 +59,54 @@ Planilha (Google Sheets)
 
 ## Estrutura do JSON
 
-O endpoint retorna um objeto com três chaves principais: `discounts` e `modules`.
+O endpoint retorna um objeto com 4 chaves principais: discounts, modules, plans e compare.
 
 ```json
 {
   "discounts": [
-    { "name": "Mensal",      "label": "mês",       "value": 0  },
-    { "name": "Trimestral",  "label": "trimestre",  "value": 12 },
-    { "name": "Semestral",   "label": "semestre",   "value": 15 },
-    { "name": "Anual",       "label": "ano",        "value": 20 }
+    { "name": "Mensal", "label": "mês", "value": 0 }
   ],
   "modules": {
     "gestao_de_produtos": {
       "title": "Gestão de Produtos",
       "items": {
-        "informacoes_arquivos_e_imagens": {
-          "nome": "Informações, Arquivos e Imagens",
-          "preco": "365.00",
+        "chave_do_item": {
+          "nome": "...",
+          "nome_completo": "Módulo - Nome do item",
+          "preco": "200.00",
           "preco_unitario": "0.00",
           "implantacao": "0.00",
+          "limite": "1/3/50/5",
           "label_total": "empreendimento"
         }
       }
     }
   },
-    "plans": {
-        "gestao_de_empreendimentos": {
-            "title": "Gestão de Empreendimentos",
-            "items": [
-                "usuarios_ativos",
-                "espelho_de_vendas_gestao_de_unidades_e_tabelas",
-                "novidades",
-                "planilha",
-                "informacoes_arquivos_e_imagens",
-                "app_facilita_vendas_ios_e_android",
-                "hotsite_personalizado_para_corretor",
-                "crm_reservas",
-                "4_horas",
-                "api_publica"
-            ]
-        },
-    },
+  "plans": {
+    "gestao_de_atendimento": {
+      "title": "Gestão de Atendimento",
+      "items": ["chave_do_item", "outro_item"]
+    }
+  },
+  "compare": [
+    ["FEATURE", "BÁSICO", "START", "LIGHT", "PREMIUM", "CORPORATE"],
+    ["Valor Mensal", "R$ 0,00", "R$ 250,00", "R$ 750,00", "R$ 1.500,00", "R$ 3.500,00"]
+  ]
 }
 ```
-
 | Campo | Descrição |
 |---|---|
 | `discounts[].value` | Percentual de desconto para aquele ciclo de pagamento |
 | `modules.<chave>.title` | Nome legível do módulo exibido na interface |
-| `items.<chave>.preco` | Preço fixo mensal do item |
-| `items.<chave>.preco_unitario` | Preço por unidade (usado com inputs de range) |
-| `items.<chave>.implantacao` | Valor de implantação (consultoria) |
-| `items.<chave>.label_total` | Unidade de medida exibida no resumo (`empreendimento`, `usuário` etc.) |
+| `items.<chave>.nome` | Nome curto do item |
+| `items.<chave>.nome_completo` | Nome completo no formato `"Módulo - Item"` |
+| `items.<chave>.preco` | Preço fixo mensal |
+| `items.<chave>.preco_unitario` | Preço por unidade adicional (usado com inputs de range) |
+| `items.<chave>.implantacao` | Valor de implantação único (consultoria) |
+| `items.<chave>.limite` | Limites por tier separados por `/` (ex: `"1/3/50/5"`), ou `"-"` se não aplicável |
+| `items.<chave>.label_total` | Unidade de medida exibida no resumo (`"empreendimento"`, `"usuário"` etc.) |
+| `plans.<chave>.items` | Array de chaves referenciando itens em `modules.*.items` |
+| `compare` | Array de arrays para montar a tabela comparativa dos 5 planos fixos |
 
 Cada item também pode conter chaves de plano (`gestao_de_atendimento`, `gestao_de_empreendimentos`, `gestao_de_vendas`) cujo valor indica se o item está disponível naquele plano (`"Ilimitado"`, `"+"`) ou não (`"-"`).
 
