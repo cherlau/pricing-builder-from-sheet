@@ -118,7 +118,7 @@ Cada item também pode conter chaves de plano (`gestao_de_atendimento`, `gestao_
 
 ```bash
 # 1. Clone o repositório
-git clone <url-do-repo>
+git clone git@github.com:cherlau/pricing-builder-from-sheet.git
 cd pricing-builder-from-sheet
 
 # 2. Instale as dependências
